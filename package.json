@@ -10,6 +10,10 @@
     "type": "git",
     "url": "git@github.com:hgarcia/odyssey.git"
   },
+  "devDependencies": {
+    "mocha": "1.8.1",
+    "should": "1.2.1"
+  },
   "keywords": [
     "mongodb",
     "migrate",
