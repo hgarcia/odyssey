@@ -1,0 +1,22 @@
+{
+  "name": "odyssey",
+  "version": "0.1.0",
+  "description": "A tool to help with db migrations, mongo to start but should work with any database.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/*.tests.js -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hgarcia/odyssey.git"
+  },
+  "keywords": [
+    "mongodb",
+    "migrate",
+    "migrations",
+    "versioning",
+    "databases"
+  ],
+  "author": "Hernan Garcia <hernan@dynamicprogrammer.com> (http://dynamicprogrammer.com)",
+  "license": "MIT"
+}
