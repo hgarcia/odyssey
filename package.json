@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git@github.com:hgarcia/odyssey.git"
   },
+  "bin": {
+    "odyssey": "./bin/odyssey"
+  },
   "dependencies": {
     "argparse": "0.1.10",
     "ejs": "0.8.3"
