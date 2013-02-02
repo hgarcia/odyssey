@@ -10,9 +10,14 @@
     "type": "git",
     "url": "git@github.com:hgarcia/odyssey.git"
   },
+  "dependencies": {
+    "argparse": "0.1.10",
+    "ejs": "0.8.3"
+  },
   "devDependencies": {
     "mocha": "1.8.1",
-    "should": "1.2.1"
+    "should": "1.2.1",
+    "sinon": "1.5.2"
   },
   "keywords": [
     "mongodb",

@@ -6,7 +6,7 @@ describe('odyssey', function() {
   describe('.create(options)', function () {
     it('should throw if no options passed', function (done) {
       try {
-        var migratore = odyssey.create();
+        var migrator = odyssey.create();
       } catch(e) {
         done();
       }
