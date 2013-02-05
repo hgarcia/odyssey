@@ -34,7 +34,7 @@ describe("migration.create(migrationName)", function() {
       migration.create("first-migration", fs, cnsMock, migratorMock);
       fs.writeFileSync.calledOnce.should.be.ok;
       fs.writeFileSync.args[0][0].should.eql("../db/" + h.getYYYYMMDD() + "-01_first-migration.js");
-      cnsMock.content.should.eql("\nGenerating: ../db/" + h.getYYYYMMDD() + "-01_first-migration.js\nDone\n");
+      cnsMock.content.should.eql("Generating: ../db/" + h.getYYYYMMDD() + "-01_first-migration.js\nDone\n");
     });
   });
 
@@ -46,7 +46,8 @@ describe("migration.create(migrationName)", function() {
       migration.create("first-migration", fs, cnsMock, migratorMock);
       fs.writeFileSync.calledOnce.should.be.ok;
       fs.writeFileSync.args[0][0].should.eql("../db/" + h.getYYYYMMDD() + "-05_first-migration.js");
-      cnsMock.content.should.eql("\nGenerating: ../db/" + h.getYYYYMMDD() + "-05_first-migration.js\nDone\n");
+      fs.writeFileSync.args[0][1].should.include("up");
+      cnsMock.content.should.eql("Generating: ../db/" + h.getYYYYMMDD() + "-05_first-migration.js\nDone\n");
     });
   });
 

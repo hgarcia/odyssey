@@ -16,7 +16,6 @@ function getMigrationPath(name, migrator) {
 function create (name, fs, console, migrator) {
   var tplPath =  __dirname + '/../templates/migration.tpl.js';
   var filePath = getMigrationPath(name, migrator);
-  console.log(h.getTemplate({}, 'migration', fs))
   var template = fs.readFileSync(tplPath, 'utf8');
   console.log('Generating: ' + filePath);
   fs.writeFileSync(filePath, template);
