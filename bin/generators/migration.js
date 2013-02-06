@@ -1,6 +1,20 @@
-#!/usr/bin/env node
-var argParse = require("argparse");
+"use strict";
 var h = require("../helpers");
+
+function register(subparsers) {
+  var parser = subparsers.addParser('migration',
+    {
+      addHelp: true,
+      help: 'Use this command to create a new migration'
+    });
+  parser.addArgument(
+    [ '-n', '--name' ],
+    {
+      required: true,
+      help: 'The name for the new migration'
+    }
+  );
+}
 
 function getMigrationPath(name, migrator) {
   var migrationDate = h.getYYYYMMDD();
@@ -10,12 +24,12 @@ function getMigrationPath(name, migrator) {
   if (!(migrationDate > lastMigration.date)) {
     version = h.pad((parseInt(lastMigration.version, 10) + 1), 2, "0");
   }
-  return path + '/' + migrationDate + '-' + version + '_' + name + '.js';
+  return path + '/' + migrationDate + '-' + version + '_' + h.toFileName(name) + '.js';
 }
 
-function create (name, fs, console, migrator) {
+function create (args, fs, console, migrator) {
   var tplPath =  __dirname + '/../templates/migration.tpl.js';
-  var filePath = getMigrationPath(name, migrator);
+  var filePath = getMigrationPath(args.name, migrator);
   var template = fs.readFileSync(tplPath, 'utf8');
   console.log('Generating: ' + filePath);
   fs.writeFileSync(filePath, template);
@@ -23,3 +37,4 @@ function create (name, fs, console, migrator) {
 };
 
 exports.create = create;
+exports.register = register;

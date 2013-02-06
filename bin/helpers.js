@@ -20,6 +20,11 @@ function getYYYYMMDD() {
   return d.getFullYear() + "-" + pad((d.getMonth() + 1), 2, "0") + "-" + pad(d.getDate(), 2, "0");
 }
 
+function toFileName(name) {
+  return name.replace(/[^a-zA-Z]/ig, "_");
+}
+
 exports.pad = pad;
+exports.toFileName = toFileName;
 exports.getYYYYMMDD = getYYYYMMDD;
 exports.getTemplate = getTemplate;
