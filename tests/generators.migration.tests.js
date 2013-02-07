@@ -18,7 +18,7 @@ var migratorMock = {
   }
 };
 
-describe("migration.create(migrationName)", function() {
+describe("migration.create(args, fs, console, migrator)", function() {
 
   beforeEach(function () {
     sinon.stub(fs, 'writeFileSync', function (fileName, content, encoding) { });
@@ -31,7 +31,7 @@ describe("migration.create(migrationName)", function() {
 
   describe("When there are no migration for the date", function () {
     it("should create a new migration file with version 01", function () {
-      migration.create("first-migration", fs, cnsMock, migratorMock);
+      migration.create({name: "first-migration"}, fs, cnsMock, migratorMock);
       fs.writeFileSync.calledOnce.should.be.ok;
       fs.writeFileSync.args[0][0].should.eql("../db/" + h.getYYYYMMDD() + "-01_first-migration.js");
       cnsMock.content.should.eql("Generating: ../db/" + h.getYYYYMMDD() + "-01_first-migration.js\nDone\n");
@@ -43,7 +43,7 @@ describe("migration.create(migrationName)", function() {
       migratorMock.getLastMigration = function () {
         return {date: h.getYYYYMMDD(), version: "04"}
       };
-      migration.create("first-migration", fs, cnsMock, migratorMock);
+      migration.create({name: "first-migration"}, fs, cnsMock, migratorMock);
       fs.writeFileSync.calledOnce.should.be.ok;
       fs.writeFileSync.args[0][0].should.eql("../db/" + h.getYYYYMMDD() + "-05_first-migration.js");
       fs.writeFileSync.args[0][1].should.include("up");

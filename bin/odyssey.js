@@ -9,20 +9,19 @@ var parser = new ArgumentParser({
 var subparsers = parser.addSubparsers({
   title: "Odyssey subcommands"
 });
-var generators = fs.readdirSync(__dirname + "/generators");
-generators.forEach(function (generator) {
-  var key = generator.replace(".js", "");
-  cmds[key] = require("./generators/" + key);
-  cmds[key].register(subparsers);
+var files = fs.readdirSync(__dirname + "/generators");
+files.forEach(function (file) {
+  var name = file.replace(".js", "");
+  cmds[name] = require("./generators/" + name);
+  cmds[name].register(subparsers);
 });
 
 function start(args){
   var options = parser.parseArgs(args);
-  var cmd = args[0];
-  if (cmds[cmd] && cmds[cmd].create) {
-    cmds[cmd].create(options, fs, console);
+  var name = args[0];
+  if (cmds[name] && cmds[name].create) {
+    cmds[name].create(options, fs, console);
   }
 }
 
 start(process.argv.splice(2));
-exports.init = init;

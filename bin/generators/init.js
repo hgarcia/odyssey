@@ -28,6 +28,13 @@ function register(subparsers) {
       help: 'What db driver will be used (default mongoDb)'
     }
   );
+  parser.addArgument(
+    [ '-s', '--secondaryDriver' ],
+    {
+      defaultValue: 'mongo',
+      help: 'What db driver will be  for the secondary db (default mongoDb)'
+    }
+  );
 }
 
 /*
@@ -37,12 +44,13 @@ Should ask for first milestone (default v1)
 Should write configuration down to disk.
 */
 function create (args, fs, console, migrator) {
+  console.log(args);
   // var tplPath =  __dirname + '/../templates/migration.tpl.js';
   // var filePath = getMigrationPath(name, migrator);
   // var template = fs.readFileSync(tplPath, 'utf8');
   // console.log('Generating: ' + filePath);
   // fs.writeFileSync(filePath, template);
-  console.log('Done');
+  // console.log('Done');
 };
 
 exports.create = create;
