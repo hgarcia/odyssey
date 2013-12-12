@@ -4,7 +4,8 @@
   "description": "A tool to help with db migrations, mongo to start but should work with any database.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/*.tests.js -R spec"
+    "test": "mocha -R spec",
+    "test-w": "mocha -w -R spec"
   },
   "repository": {
     "type": "git",

@@ -6,7 +6,7 @@ module.exports = {
     params: {}
   },
   secondary: {
-    drive: "<%-(secondaryDriver || driver)%>",
+    driver: "<%-(secondaryDriver || driver)%>",
     params: {}
   }
 };

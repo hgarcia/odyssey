@@ -21,7 +21,7 @@ function getYYYYMMDD() {
 }
 
 function toFileName(name) {
-  return name.replace(/[^a-zA-Z\-]/ig, "_");
+  return name.replace(/[^a-zA-Z0-9\-]/ig, "_");
 }
 
 exports.pad = pad;

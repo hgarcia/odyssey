@@ -1,8 +1,8 @@
-// var should = require("should");
-// var sinon = require("sinon");
-// var fs = require('fs');
-// var h = require("../bin/helpers");
-// var init = require("../bin/generators/init");
+var should = require("should");
+var sinon = require("sinon");
+var fs = require('fs');
+var h = require("../bin/helpers");
+var init = require("../bin/generators/init");
 // var cnsMock = {
 //   content: "",
 //   log: function (txt) {
