@@ -22,6 +22,13 @@ function register(subparsers) {
     }
   );
   parser.addArgument(
+    [ '-v', '--firstMilestone' ],
+    {
+      defaultValue: 'v1',
+      help: 'If using milestones indicate the first one'
+    }
+  );
+  parser.addArgument(
     [ '-d', '--driver' ],
     {
       defaultValue: 'mongo',
@@ -38,19 +45,24 @@ function register(subparsers) {
 }
 
 /*
-Should ask for driver and try to install from npm (default mongo)
-Should ask if milestones are going to be used (default yes)
 Should ask for first milestone (default v1)
-Should write configuration down to disk.
 */
 function create (args, fs, console, migrator) {
-  console.log(args);
-  // var tplPath =  __dirname + '/../templates/migration.tpl.js';
-  // var filePath = getMigrationPath(name, migrator);
-  // var template = fs.readFileSync(tplPath, 'utf8');
-  // console.log('Generating: ' + filePath);
-  // fs.writeFileSync(filePath, template);
-  // console.log('Done');
+  var execPath = process.cwd();
+  var folder = execPath + "/" + args.folder;
+  try {
+    fs.mkdirSync(folder);
+    console.log('Creating migration folder: ' + folder);
+
+    if (args.milestones === 'yes') {
+      var milestonesFolder = folder + "/" + args.firstMilestone;
+      fs.mkdirSync(milestonesFolder);
+      console.log('Creating milestones folder: ' + milestonesFolder);
+    }
+    console.log('Done');
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 exports.create = create;
