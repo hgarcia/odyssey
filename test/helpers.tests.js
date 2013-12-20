@@ -37,7 +37,6 @@ describe("helpers", function () {
 
     it("should replace the tokens with the values", function () {
       var result = helpers.getTemplate({here: "this place"}, "tempName", fs);
-      console.log(result);
       result.should.eql("Lots of characters in this place");
     });
   });

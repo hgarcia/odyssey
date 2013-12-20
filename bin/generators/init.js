@@ -24,7 +24,7 @@ function register(subparsers) {
   parser.addArgument(
     [ '-v', '--firstMilestone' ],
     {
-      defaultValue: 'v1',
+      defaultValue: 'm1',
       help: 'If using milestones indicate the first one'
     }
   );
@@ -48,9 +48,6 @@ function create (args, fs, console, migrator) {
   var execPath = process.cwd();
   var folder = execPath + "/" + args.folder;
   try {
-    fs.mkdirSync(folder);
-    console.log('Creating migration folder: ' + folder);
-
     fs.mkdirSync(folder);
     console.log('Creating migration folder: ' + folder);
 

@@ -3,52 +3,41 @@ var sinon = require("sinon");
 var fs = require('fs');
 var h = require("../bin/helpers");
 var init = require("../bin/generators/init");
-// var cnsMock = {
-//   content: "",
-//   log: function (txt) {
-//     this.content += txt + "\n";
-//   }
-// };
-// var migratorMock = {
-//   getLastMigration: function () {
-//     return {date: "", version: ""};
-//   },
-//   getMigrationsPath: function () {
-//     return "../db";
-//   }
-// };
+var cnsMock = {
+  content: "",
+  log: function (txt) {
+    this.content += txt + "\n";
+  }
+};
 
-// describe("init.create(args, fs, console, migrator)", function() {
+describe("init.create(args, fs, console, migrator)", function() {
 
-//   beforeEach(function () {
-//     sinon.stub(fs, 'writeFileSync', function (fileName, content, encoding) { });
-//   });
+  beforeEach(function () {
+    sinon.stub(fs, 'mkdirSync', function (path) { });
+  });
 
-//   afterEach(function () {
-//     fs.writeFileSync.restore();
-//     cnsMock.content = "";
-//   });
+  afterEach(function () {
+    fs.mkdirSync.restore();
+    cnsMock.content = "";
+  });
 
-//   describe("When there are no migration for the date", function () {
-//     it("should create a new migration file with version 01", function () {
-//       migration.create("first-migration", fs, cnsMock, migratorMock);
-//       fs.writeFileSync.calledOnce.should.be.ok;
-//       fs.writeFileSync.args[0][0].should.eql("../db/" + h.getYYYYMMDD() + "-01_first-migration.js");
-//       cnsMock.content.should.eql("Generating: ../db/" + h.getYYYYMMDD() + "-01_first-migration.js\nDone\n");
-//     });
-//   });
+  describe("With default args", function () {
+    it("should create the default environment", function () {
+      init.create({folder: "mig"}, fs, cnsMock);
+      fs.mkdirSync.calledOnce.should.be.ok;
+      fs.mkdirSync.args[0][0].should.include("/mig");
+      cnsMock.content.should.include("Creating migration folder:");
+      cnsMock.content.should.include("Done");
+    });
 
-//   describe("When there are four migrations for the date", function () {
-//     it("should create a new migration file with version 05", function () {
-//       migratorMock.getLastMigration = function () {
-//         return {date: h.getYYYYMMDD(), version: "04"}
-//       };
-//       migration.create("first-migration", fs, cnsMock, migratorMock);
-//       fs.writeFileSync.calledOnce.should.be.ok;
-//       fs.writeFileSync.args[0][0].should.eql("../db/" + h.getYYYYMMDD() + "-05_first-migration.js");
-//       fs.writeFileSync.args[0][1].should.include("up");
-//       cnsMock.content.should.eql("Generating: ../db/" + h.getYYYYMMDD() + "-05_first-migration.js\nDone\n");
-//     });
-//   });
-
-// });
+    it("should create the default environment with milestones", function () {
+      init.create({folder: "mig", milestones: 'yes', firstMilestone: 'm1'}, fs, cnsMock);
+      fs.mkdirSync.calledTwice.should.be.ok;
+      fs.mkdirSync.args[0][0].should.include("/mig");
+      fs.mkdirSync.args[1][0].should.include("/mig/m1");
+      cnsMock.content.should.include("Creating migration folder:");
+      cnsMock.content.should.include("Creating milestones folder:");
+      cnsMock.content.should.include("Done");
+    });
+  });
+});
