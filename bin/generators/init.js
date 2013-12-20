@@ -1,4 +1,5 @@
 "use strict";
+var h = require('../helpers');
 
 function register(subparsers) {
   var parser = subparsers.addParser('init',
@@ -28,33 +29,47 @@ function register(subparsers) {
       help: 'If using milestones indicate the first one'
     }
   );
-  // parser.addArgument(
-  //   [ '-d', '--driver' ],
-  //   {
-  //     defaultValue: 'mongo',
-  //     help: 'What db driver will be used (default mongo)'
-  //   }
-  // );
-  // parser.addArgument(
-  //   [ '-s', '--secondaryDriver' ],
-  //   {
-  //     defaultValue: 'mongo',
-  //     help: 'What db driver will used be for the secondary db (default mongo)'
-  //   }
-  // );
+  parser.addArgument(
+    [ '-d', '--driver' ],
+    {
+      defaultValue: 'mongo',
+      help: 'What db driver will be used (default mongo)'
+    }
+  );
+  parser.addArgument(
+    [ '-s', '--secondaryDriver' ],
+    {
+      defaultValue: 'mongo',
+      help: 'What db driver will used be for the secondary db (default mongo)'
+    }
+  );
+}
+
+function createFolder(folders, fs, console) {
+  var path = folders.join("/");
+  fs.mkdirSync(path);
+  console.log("Creating folder: ", path);
+}
+
+function createDriver(path, driver, fs, console, type) {
+  var template = h.getTemplate({driver: driver}, "driver", fs);
+  path.push(type + "Driver.js");
+  fs.writeFileSync(path.join("/"), template);
+  console.log('Generating primary driver');
 }
 
 function create (args, fs, console, migrator) {
-  var execPath = process.cwd();
-  var folder = execPath + "/" + args.folder;
+  var folders = [process.cwd(), args.folder];
   try {
-    fs.mkdirSync(folder);
-    console.log('Creating migration folder: ' + folder);
-
+    createFolder(folders, fs, console);
+    if (args.driver) {
+      var toolsFolder = folders.concat(['tools']);
+      createFolder(toolsFolder, fs, console);
+      createDriver(toolsFolder, args.driver, fs, console, "primary");
+    }
     if (args.milestones === 'yes') {
-      var milestonesFolder = folder + "/" + args.firstMilestone;
-      fs.mkdirSync(milestonesFolder);
-      console.log('Creating milestones folder: ' + milestonesFolder);
+      folders.push(args.firstMilestone);
+      createFolder(folders, fs, console);
     }
     console.log('Done');
   } catch (e) {
