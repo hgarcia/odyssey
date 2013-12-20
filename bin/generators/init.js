@@ -28,29 +28,29 @@ function register(subparsers) {
       help: 'If using milestones indicate the first one'
     }
   );
-  parser.addArgument(
-    [ '-d', '--driver' ],
-    {
-      defaultValue: 'mongo',
-      help: 'What db driver will be used (default mongoDb)'
-    }
-  );
-  parser.addArgument(
-    [ '-s', '--secondaryDriver' ],
-    {
-      defaultValue: 'mongo',
-      help: 'What db driver will be  for the secondary db (default mongoDb)'
-    }
-  );
+  // parser.addArgument(
+  //   [ '-d', '--driver' ],
+  //   {
+  //     defaultValue: 'mongo',
+  //     help: 'What db driver will be used (default mongo)'
+  //   }
+  // );
+  // parser.addArgument(
+  //   [ '-s', '--secondaryDriver' ],
+  //   {
+  //     defaultValue: 'mongo',
+  //     help: 'What db driver will used be for the secondary db (default mongo)'
+  //   }
+  // );
 }
 
-/*
-Should ask for first milestone (default v1)
-*/
 function create (args, fs, console, migrator) {
   var execPath = process.cwd();
   var folder = execPath + "/" + args.folder;
   try {
+    fs.mkdirSync(folder);
+    console.log('Creating migration folder: ' + folder);
+
     fs.mkdirSync(folder);
     console.log('Creating migration folder: ' + folder);
 
