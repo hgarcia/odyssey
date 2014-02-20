@@ -1,6 +1,8 @@
 Odyssey
 =======
 
+[![Build Status](https://travis-ci.org/hgarcia/odyssey.png?branch=master)](https://travis-ci.org/hgarcia/odyssey)
+
 Odysey should be installed globally to get the main generator.
 
 
